@@ -6,7 +6,6 @@ import SEO from "../src/components/SEO";
 import { EditorProvider } from "../src/contexts/EditorContext";
 import "../styles/global.css";
 import * as gtag from "../src/lib/gtag";
-import Script from "next/script";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -26,24 +25,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <EditorProvider>
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-      />
-      <Script
-        id="gtag-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${gtag.GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
-          `,
-        }}
-      />
       <SEO />
       <Header />
       <Component {...pageProps} />
