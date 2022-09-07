@@ -16,7 +16,7 @@ const TopBarAd = () => {
       style={{
         display: "inline-block",
         width: 620,
-        height: 128,
+        height: 96,
       }}
       data-ad-client="ca-pub-7322439099058988"
       data-ad-slot="4221413788"

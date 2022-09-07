@@ -18,7 +18,7 @@ function IndexPage() {
     <>
       <Backgorund />
       <div className="pb-40 relative w-fit mx-auto">
-        <div className="flex items-center justify-center my-12">
+        <div className="flex items-center justify-center my-4">
           <TopBarAd />
         </div>
         <div className="absolute -left-40 top-0">

@@ -11,7 +11,7 @@ const Preview = () => {
 
   return (
     <div
-      className={`w-full overflow-x-auto my-12 px-4 ${
+      className={`w-full overflow-x-auto my-8 px-4 ${
         settings.darkMode ? "dark" : ""
       }`}
     >
