@@ -1,20 +1,32 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 const Header = () => {
   return (
     <div className="w-full py-4 flex items-center px-4 gap-6">
-      <div className="inline-flex gap-4 items-center">
+      <div className="inline-flex gap-6 items-center">
         <Link href="/">
-          <a className="font-medium text-xl">CodeToImg</a>
+          <a className="flex gap-2 items-center">
+            <img
+              src="/icons/svg-icon.svg"
+              alt="CodeToImg Logo"
+              className="w-9 h-9"
+            />
+            <span className="font-bold text-xl text-white">CodeToImg</span>
+          </a>
         </Link>
-        <Link href="/legal/privacy-policy">
-          <a>Privacy Policy</a>
-        </Link>
-        <Link href="/legal/cookie-policy">
-          <a>Cookie Policy</a>
-        </Link>
+        <ul className="flex gap-4">
+          <li>
+            <Link href="/legal/privacy-policy">
+              <a className="text-sm">Privacy</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/legal/cookie-policy">
+              <a className="text-sm">Cookie</a>
+            </Link>
+          </li>
+        </ul>
       </div>
       <div className="flex-1"></div>
       <a
@@ -25,8 +37,10 @@ const Header = () => {
       >
         <FaGithub className="text-2xl" />
       </a>
-      <ByMeACoffeeButton />
-      <ProductHuntBadge />
+      <div className="md:flex items-center gap-2 hidden">
+        <ByMeACoffeeButton />
+        <ProductHuntBadge />
+      </div>
     </div>
   );
 };

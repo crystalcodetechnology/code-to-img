@@ -11,7 +11,7 @@ import {
 import { gradients } from "../data/gradients";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { toPng, toJpeg, toSvg, toBlob } from "html-to-image";
-import { Options } from "html-to-image/lib/options";
+import { Options } from "html-to-image/lib/types";
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -95,7 +95,7 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(false);
       router.push("/");
     }
-  }, [setIsLoading, router]);
+  }, [router, setSettings]);
 
   useEffect(() => {
     getSettings();
