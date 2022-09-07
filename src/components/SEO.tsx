@@ -1,30 +1,13 @@
 import Head from "next/head";
-import Script from "next/script";
 
-const TITLE = "Code to Image Converter";
+const TITLE = "CodeToImg";
 const DESCRIPTION =
-  "Code to Image converter is a beautifully designed application that helps you generate beautiful and customizable images of your code snippets. This is built for the developer by the developer. If you want to share your code with anyone or on any social media this is the application you need.";
+  "CodeToImg is a beautifully designed application that helps you generate beautiful and customizable images of your code snippets. This is built for the developer by the developer. If you want to share your code with anyone or on any social media this is the application you need.";
 const URL = "https://codetoimg.com";
 
 const SEO = () => {
   return (
     <>
-      <Script
-        strategy="lazyOnload"
-        src="https://www.googletagmanager.com/gtag/js?id=G-DPNQZEQHZ6"
-      />
-      <Script
-        id="ga-script"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-DPNQZEQHZ6');
-          `,
-        }}
-      />
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="shortcut icon" href="/favicon.svg" />
