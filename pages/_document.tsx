@@ -6,31 +6,25 @@ const MyDocument = () => {
     <Html>
       <Head>
         {/* Gogole Adservice Script */}
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7322439099058988"
           crossOrigin="anonymous"
-          strategy="beforeInteractive"
-        />
+        ></script>
         {/* Google Tagmanager */}
         <Script
-          async
           src="https://www.googletagmanager.com/gtag/js?id=G-DPNQZEQHZ6"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
         />
-        <Script
-          id="ads"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
           window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
+          function gtag(){window.dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', 'G-DPNQZEQHZ6');  
-        `,
-          }}
-        />
+          gtag('config', 'G-DPNQZEQHZ6');
+        `}
+        </Script>
       </Head>
       <body>
         <Main />
