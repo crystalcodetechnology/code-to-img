@@ -13,8 +13,8 @@ const MyDocument = () => {
         ></script>
         {/* Google Tagmanager */}
         <Script
+          strategy="lazyOnload"
           src="https://www.googletagmanager.com/gtag/js?id=G-DPNQZEQHZ6"
-          strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
