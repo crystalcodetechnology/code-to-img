@@ -1,6 +1,4 @@
 import Head from "next/head";
-import Script from "next/script";
-import React from "react";
 
 const TITLE = "Code to Image Converter";
 const DESCRIPTION =
@@ -10,32 +8,6 @@ const URL = "https://codetoimg.com";
 const SEO = () => {
   return (
     <>
-      {/* Google Analytics */}
-      <Script
-        strategy="lazyOnload"
-        src={`
-    https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_TRACKING_ID}
-    `}
-      />
-      <Script
-        id="ga-script"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '${process.env.NEXT_PUBLIC_GA_TRACKING_ID}');
-    `,
-        }}
-      />
-      <Script
-        async
-        strategy="lazyOnload"
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7322439099058988"
-        crossOrigin="anonymous"
-      ></Script>
-      {/* END Google Analytics */}
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="shortcut icon" href="/favicon.svg" />
@@ -43,7 +15,7 @@ const SEO = () => {
         <meta name="description" content={DESCRIPTION} />
         <meta
           name="keywords"
-          content="codetoimg, codeimg, image, code, developer, developer tool, image generator, code snippets, snippets, code to image, converter, image converter, convert code to images, code to img, code image"
+          content="codetoimg, codeimg, image, code, developer, developer tool, image generator, code snippets, snippets, code to image, converter, image converter, convert code to images, code to img, code image, snapshot, code snapshot, codeblock"
         />
 
         {/* TWITTER */}
