@@ -1,10 +1,10 @@
 import type { Extension } from "@codemirror/state";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useEditor } from "../contexts/EditorContext";
 import Editor from "./Editor/Editor";
-import { getTheme } from "./Editor/themes";
 import { isDark } from "../utils";
 import { getExtentions } from "./Editor/get-extentions";
+import { darkTheme, lightTheme } from "./Editor/themes";
 
 const Preview = () => {
   const { settings, canvasRef, getPadding } = useEditor();
@@ -46,6 +46,11 @@ const Window = () => {
   const [bgHeight, setBgHeight] = useState(0);
   const [extentions, setExtentions] = useState<Extension[] | undefined>([]);
   const { settings, setSettings, canvasRef, getPadding } = useEditor();
+
+  const theme = useMemo(
+    () => (settings.darkMode ? darkTheme : lightTheme),
+    [settings.darkMode]
+  );
 
   const onCodeChange = useCallback(
     (value: string) => {
@@ -99,11 +104,17 @@ const Window = () => {
         value={settings.code}
         onChange={onCodeChange}
         extensions={extentions}
-        theme={getTheme({
-          darkMode: settings.darkMode,
-          showLineNumber: settings.showLineNumber,
+        theme={theme}
+        basicSetup={{
+          foldGutter: false,
+          allowMultipleSelections: false,
+          lineNumbers: settings.showLineNumber,
+          highlightActiveLine: false,
+        }}
+        style={{
+          outline: "none",
           fontSize: settings.fontSize,
-        })}
+        }}
       />
     </div>
   );
