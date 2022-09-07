@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Script from "next/script";
 
 const TITLE = "Code to Image Converter";
 const DESCRIPTION =
@@ -8,6 +9,22 @@ const URL = "https://codetoimg.com";
 const SEO = () => {
   return (
     <>
+      <Script
+        strategy="lazyOnload"
+        src="https://www.googletagmanager.com/gtag/js?id=G-DPNQZEQHZ6"
+      />
+      <Script
+        id="ga-script"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-DPNQZEQHZ6);
+          `,
+        }}
+      />
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="shortcut icon" href="/favicon.svg" />
