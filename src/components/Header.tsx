@@ -12,7 +12,10 @@ const Header = () => {
               alt="CodeToImg Logo"
               className="w-9 h-9"
             />
-            <span className="font-bold text-xl text-white">CodeToImg</span>
+            <p>
+              <span className="font-bold text-xl text-white">CodeToImg</span>
+              <span className="text-xs ml-1">v1.2.0</span>
+            </p>
           </a>
         </Link>
         <ul className="flex gap-4">
