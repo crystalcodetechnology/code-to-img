@@ -14,7 +14,7 @@ If you want a self-hosted deployment, code-to-image supports that too,
 
 **To deploy using docker, use,**
 
-`docker-compose up -d `
+`docker-compose up -d`
 
 > -d -> Detach from the container after creation.
 
