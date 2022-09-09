@@ -18,18 +18,6 @@ const Header = () => {
             </p>
           </a>
         </Link>
-        <ul className="flex gap-4">
-          <li>
-            <Link href="/legal/privacy-policy">
-              <a className="text-sm">Privacy</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/legal/cookie-policy">
-              <a className="text-sm">Cookie</a>
-            </Link>
-          </li>
-        </ul>
       </div>
       <div className="flex-1"></div>
       <a
