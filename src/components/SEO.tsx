@@ -9,9 +9,9 @@ const SEO = () => {
   return (
     <>
       <Head>
+        <title>{TITLE}</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="shortcut icon" href="/favicon.svg" />
-        <title>{TITLE}</title>
         <meta name="description" content={DESCRIPTION} />
         <meta
           name="keywords"
@@ -20,8 +20,8 @@ const SEO = () => {
 
         {/* TWITTER */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@rohidisdev" />
-        <meta name="twitter:creator" content="@rohidisdev" />
+        <meta name="twitter:site" content="@rohid_dev" />
+        <meta name="twitter:creator" content="@rohid_dev" />
         <meta name="twitter:title" content={TITLE} />
         <meta name="twitter:description" content={DESCRIPTION} />
         <meta name="twitter:image" content={`${URL}/twitter-card.png`} />
