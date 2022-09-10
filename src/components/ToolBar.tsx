@@ -4,16 +4,12 @@ import { useEditor } from "../contexts/EditorContext";
 import { BackgroundPicker } from "./BackgroundPicker";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Select from "@radix-ui/react-select";
+import { useAtom } from "jotai";
+import { appStateAtom } from "../stores/appState";
 
 const ToolBar = () => {
-  const {
-    setSettings,
-    settings,
-    onExport,
-    onCopyAsLink,
-    onCopyAsImage,
-    onReset,
-  } = useEditor();
+  const [appState, setAppState] = useAtom(appStateAtom);
+  const { onExport, onCopyAsLink, onCopyAsImage, onReset } = useEditor();
 
   return (
     <div className="fixed bottom-0 w-full left-0 right-0 p-4 md:p-8 z-20 pointer-events-none">
@@ -23,45 +19,45 @@ const ToolBar = () => {
             <BackgroundPicker />
             <SwitchItem
               label="Background Blur"
-              value={settings.bgBlur}
+              value={appState.bgBlur}
               onChange={() =>
-                setSettings({
-                  ...settings,
-                  bgBlur: !settings.bgBlur,
+                setAppState({
+                  ...appState,
+                  bgBlur: !appState.bgBlur,
                 })
               }
             />
             <SwitchItem
               label="Drop Shadow"
-              value={settings.dropShadow}
+              value={appState.dropShadow}
               onChange={() =>
-                setSettings({ ...settings, dropShadow: !settings.dropShadow })
+                setAppState({ ...appState, dropShadow: !appState.dropShadow })
               }
             />
             <SwitchItem
               label="Dark Mode"
-              value={settings.darkMode}
+              value={appState.darkMode}
               onChange={() =>
-                setSettings({ ...settings, darkMode: !settings.darkMode })
+                setAppState({ ...appState, darkMode: !appState.darkMode })
               }
             />
             <SwitchItem
               label="Line Number"
-              value={settings.showLineNumber}
+              value={appState.showLineNumber}
               onChange={() =>
-                setSettings({
-                  ...settings,
-                  showLineNumber: !settings.showLineNumber,
+                setAppState({
+                  ...appState,
+                  showLineNumber: !appState.showLineNumber,
                 })
               }
             />
             <SwitchItem
               label="Title Text"
-              value={settings.showTitle}
+              value={appState.showTitle}
               onChange={() =>
-                setSettings({
-                  ...settings,
-                  showTitle: !settings.showTitle,
+                setAppState({
+                  ...appState,
+                  showTitle: !appState.showTitle,
                 })
               }
             />
@@ -78,21 +74,21 @@ const ToolBar = () => {
                 "28px",
                 "32px",
               ]}
-              value={settings.fontSize}
+              value={appState.fontSize}
               onChange={(value) => {
-                setSettings({
-                  ...settings,
+                setAppState({
+                  ...appState,
                   fontSize: value,
                 });
               }}
             />
             <SelectItem
               label="Padding"
-              options={["small", "medium", "large", "extra-large"]}
-              value={settings.padding}
+              options={["36px", "48px", "64px", "80px", "96px"]}
+              value={appState.padding}
               onChange={(value) => {
-                setSettings({
-                  ...settings,
+                setAppState({
+                  ...appState,
                   padding: value,
                 });
               }}
@@ -122,10 +118,10 @@ const ToolBar = () => {
                 "php",
                 "swift",
               ].sort((a, b) => (a < b ? -1 : 1))}
-              value={settings.language}
+              value={appState.language}
               onChange={(value) => {
-                setSettings({
-                  ...settings,
+                setAppState({
+                  ...appState,
                   language: value,
                 });
               }}
@@ -134,33 +130,33 @@ const ToolBar = () => {
             <SelectItem
               label="Format"
               options={["png", "jpeg", "svg"]}
-              value={settings.renderFormat}
+              value={appState.renderFormat}
               onChange={(value) => {
-                setSettings({
-                  ...settings,
+                setAppState({
+                  ...appState,
                   renderFormat: value,
                 });
               }}
             />
             <SelectItem
-              disabled={settings.renderFormat === "svg"}
+              disabled={appState.renderFormat === "svg"}
               label="Scale"
               options={["1x", "2x", "3x"]}
-              value={settings.renderScale}
+              value={appState.renderScale}
               onChange={(value) => {
-                setSettings({
-                  ...settings,
+                setAppState({
+                  ...appState,
                   renderScale: value,
                 });
               }}
             />
             <SwitchItem
               label="Show Watermark"
-              value={settings.showWaterMark}
+              value={appState.showWaterMark}
               onChange={() =>
-                setSettings({
-                  ...settings,
-                  showWaterMark: !settings.showWaterMark,
+                setAppState({
+                  ...appState,
+                  showWaterMark: !appState.showWaterMark,
                 })
               }
             />
