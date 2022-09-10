@@ -12,6 +12,7 @@ import { Options } from "html-to-image/lib/types";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { AppState, appStateAtom, initAppState } from "../stores/appState";
+import { exportSettingsAtom } from "../stores/exportSettings";
 
 export type EditorContextType = {
   canvasRef: React.RefObject<HTMLDivElement>;
@@ -26,6 +27,8 @@ export const EditorContext = createContext<EditorContextType | null>(null);
 export const EditorProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [settings, setSettings] = useAtom(appStateAtom);
+  const [exportSettings] = useAtom(exportSettingsAtom);
+
   const router = useRouter();
 
   const getSettings = useCallback(async () => {
@@ -69,18 +72,25 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
 
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  const getConvertOptions = (settings: AppState) => {
-    const scale =
-      settings.renderScale === "3x" ? 3 : settings.renderScale === "2x" ? 2 : 1;
-    console.log(scale);
+  const getConvertOptions = useCallback(
+    (settings: AppState) => {
+      const scale =
+        exportSettings.renderScale === "3x"
+          ? 3
+          : exportSettings.renderScale === "2x"
+          ? 2
+          : 1;
+      console.log(scale);
 
-    const options: Options = {
-      canvasWidth: canvasRef.current.clientWidth * scale,
-      canvasHeight: canvasRef.current.clientHeight * scale,
-      quality: 0.95,
-    };
-    return options;
-  };
+      const options: Options = {
+        canvasWidth: canvasRef.current.clientWidth * scale,
+        canvasHeight: canvasRef.current.clientHeight * scale,
+        quality: 0.95,
+      };
+      return options;
+    },
+    [exportSettings.renderScale]
+  );
 
   const onExport: EditorContextType["onExport"] = useCallback(async () => {
     if (!canvasRef.current) return;
@@ -89,7 +99,7 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
 
     var imgUrl: string | null = null;
 
-    const fileExtension = `.${settings.renderFormat.toLowerCase()}`;
+    const fileExtension = `.${exportSettings.renderFormat.toLowerCase()}`;
 
     switch (fileExtension) {
       case ".png":
@@ -112,7 +122,7 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
     link.download = `${settings.filename || "Untitled"}${fileExtension}`;
     link.href = imgUrl;
     link.click();
-  }, [settings, canvasRef]);
+  }, [getConvertOptions, settings, exportSettings.renderFormat]);
 
   const onCopyAsLink: EditorContextType["onCopyAsLink"] =
     useCallback(async () => {
@@ -128,7 +138,7 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
         new ClipboardItem({ "image/png": blog }),
       ]);
       console.log("Copied");
-    }, [settings]);
+    }, [getConvertOptions, settings]);
 
   const onReset = () => {
     setSettings(initAppState);

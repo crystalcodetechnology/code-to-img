@@ -9,7 +9,6 @@ export type AppState = {
   dropShadow: boolean;
   showTitle: boolean;
   bgBlur: boolean;
-  showWaterMark: boolean;
   fontSize: string;
   padding: string;
   language: string;
@@ -17,8 +16,6 @@ export type AppState = {
   backgroundImage?: string;
   backgroundThumb?: string;
   showLineNumber: boolean;
-  renderScale: string;
-  renderFormat: string;
 };
 
 const DEFAULT_JS_VALUE = `function hello() {
@@ -33,7 +30,6 @@ export const initAppState: AppState = {
   dropShadow: true,
   showTitle: false,
   showLineNumber: true,
-  showWaterMark: true,
   bgBlur: true,
   fontSize: "16px",
   language: "javascript",
@@ -43,8 +39,6 @@ export const initAppState: AppState = {
   backgroundImage: gradients[0].gradient,
   backgroundThumb: gradients[0].gradient,
   backgroundColor: gradients[0].color,
-  renderScale: "1x",
-  renderFormat: "png",
 };
 
 export const appStateAtom = atom<AppState>(initAppState);
