@@ -9,7 +9,6 @@ import {
 } from "react";
 import { toPng, toJpeg, toSvg, toBlob } from "html-to-image";
 import { Options } from "html-to-image/lib/types";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { AppState, appStateAtom, initAppState } from "../stores/appState";
@@ -25,24 +24,48 @@ export type EditorContextType = {
 export const EditorContext = createContext<EditorContextType | null>(null);
 
 export const EditorProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [settings, setSettings] = useAtom(appStateAtom);
   const router = useRouter();
 
   const getSettings = useCallback(async () => {
-    const { token } = router.query;
-    if (token) {
-      setIsLoading(true);
-      const { data } = await axios.get(`/api/hash-object?token=${token}`);
-      setSettings(data);
-      setIsLoading(false);
-      router.push("/");
-    }
-  }, [router, setSettings]);
+    let decodedQuery: any = Object.fromEntries(
+      new URLSearchParams(location.search)
+    );
+    Object.keys(decodedQuery).map((key) => {
+      switch (decodedQuery[key]) {
+        case "true":
+          decodedQuery[key] = true;
+          break;
+
+        case "false":
+          decodedQuery[key] = false;
+          break;
+
+        default:
+          break;
+      }
+    });
+    console.log({ decodedQuery });
+
+    setSettings({
+      ...initAppState,
+      ...decodedQuery,
+    });
+
+    setIsLoading(false);
+  }, [setSettings]);
 
   useEffect(() => {
     getSettings();
   }, [getSettings]);
+
+  useEffect(() => {
+    if (isLoading) return;
+    router.replace({
+      query: settings,
+    });
+  }, [settings, isLoading]);
 
   const canvasRef = useRef<HTMLDivElement>(null);
 
@@ -93,11 +116,8 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
 
   const onCopyAsLink: EditorContextType["onCopyAsLink"] =
     useCallback(async () => {
-      const origin = window.location.origin;
-      const { data } = await axios.post(`/api/hash-object`, settings);
-      const link = `${origin}?token=${data.token}`;
-      window.navigator.clipboard.writeText(link);
-    }, [settings]);
+      window.navigator.clipboard.writeText(location.href);
+    }, []);
 
   const onCopyAsImage: EditorContextType["onCopyAsImage"] =
     useCallback(async () => {
