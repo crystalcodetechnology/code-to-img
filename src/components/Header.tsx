@@ -18,6 +18,14 @@ const Header = () => {
             </p>
           </a>
         </Link>
+        <p className="text-gray-300">
+          by{" "}
+          <Link href="https://rohid.dev">
+            <a target="_blank" className="hover:text-gray-50">
+              Rohid
+            </a>
+          </Link>
+        </p>
       </div>
       <div className="flex-1"></div>
       <a
