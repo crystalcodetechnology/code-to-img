@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { AppState, appStateAtom, initAppState } from "../stores/appState";
 import { exportSettingsAtom } from "../stores/exportSettings";
+import * as gtag from "../lib/gtag";
 
 export type EditorContextType = {
   canvasRef: React.RefObject<HTMLDivElement>;
@@ -102,9 +103,6 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
     const fileExtension = `.${exportSettings.renderFormat.toLowerCase()}`;
 
     switch (fileExtension) {
-      case ".png":
-        imgUrl = await toPng(canvasRef.current, options);
-        break;
       case ".jpeg":
         imgUrl = await toJpeg(canvasRef.current, options);
         break;
@@ -117,16 +115,27 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
     }
 
     if (!imgUrl) return;
-
+    const filename = `${settings.filename || "Untitled"}${fileExtension}`;
     const link = document.createElement("a");
-    link.download = `${settings.filename || "Untitled"}${fileExtension}`;
+    link.download = filename;
     link.href = imgUrl;
     link.click();
+
+    gtag.event({
+      action: "image_export",
+      category: "export",
+      label: location.href,
+    });
   }, [getConvertOptions, settings, exportSettings.renderFormat]);
 
   const onCopyAsLink: EditorContextType["onCopyAsLink"] =
     useCallback(async () => {
       window.navigator.clipboard.writeText(location.href);
+      gtag.event({
+        action: "copy_link",
+        category: "export",
+        label: location.href,
+      });
     }, []);
 
   const onCopyAsImage: EditorContextType["onCopyAsImage"] =
@@ -138,10 +147,19 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
         new ClipboardItem({ "image/png": blog }),
       ]);
       console.log("Copied");
+      gtag.event({
+        action: "copy_image",
+        category: "export",
+        label: location.href,
+      });
     }, [getConvertOptions, settings]);
 
   const onReset = () => {
     setSettings(initAppState);
+    gtag.event({
+      action: "reset",
+      category: "reset",
+    });
   };
   if (isLoading) return null;
 
