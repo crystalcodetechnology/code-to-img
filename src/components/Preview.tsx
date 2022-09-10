@@ -14,7 +14,7 @@ const Preview = () => {
 
   return (
     <div
-      className={`w-full overflow-x-auto my-8 px-4 ${
+      className={`w-full overflow-x-auto my-8 px-4 mb-40 ${
         appState.darkMode ? "dark" : ""
       }`}
     >

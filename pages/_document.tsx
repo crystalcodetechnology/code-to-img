@@ -1,6 +1,6 @@
 import { Head, Html, Main, NextScript } from "next/document";
 import Script from "next/script";
-import * as gtag from "../src/lib/gtag";
+import { GA_TRACKING_ID } from "../src/lib/gtag";
 
 const MyDocument = () => {
   return (
@@ -8,20 +8,21 @@ const MyDocument = () => {
       <Head>
         <Script
           strategy="beforeInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-        />
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+        ></Script>
         <Script
-          id="gtag-init"
+          id="google-analytics"
           strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${gtag.GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
-          `,
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${GA_TRACKING_ID}', {
+                    page_path: window.location.pathname,
+                  });
+                `,
           }}
         />
       </Head>

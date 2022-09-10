@@ -46,7 +46,6 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
           break;
       }
     });
-    console.log({ decodedQuery });
 
     setSettings({
       ...initAppState,
@@ -65,6 +64,7 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
     router.replace({
       query: settings,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings, isLoading]);
 
   const canvasRef = useRef<HTMLDivElement>(null);
