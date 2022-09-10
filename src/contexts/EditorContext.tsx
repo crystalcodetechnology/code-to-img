@@ -35,15 +35,11 @@ export type EditorSettings = {
   renderFormat: string;
 };
 
-const DEFAULT_JS_VALUE = `import React from "react";
-
-const App = () => {
-  return (
-    <div>Hello, World!</div>
-  )
+const DEFAULT_JS_VALUE = `function hello() {
+  console.log("Hello, World!");
 }
 
-export default App;`;
+hello();`;
 
 const defaultSettings: EditorSettings = {
   filename: "Untitled",
@@ -54,7 +50,7 @@ const defaultSettings: EditorSettings = {
   showWaterMark: true,
   bgBlur: true,
   fontSize: "16px",
-  language: "jsx",
+  language: "javascript",
   padding: "medium",
   title: "Title Text",
   code: DEFAULT_JS_VALUE,
