@@ -7,6 +7,7 @@ import { getExtentions } from "./Editor/get-extentions";
 import { darkTheme, lightTheme } from "./Editor/themes";
 import { useAtom } from "jotai";
 import { appStateAtom } from "../stores/appState";
+import { exportSettingsAtom } from "../stores/exportSettings";
 
 const Preview = () => {
   const [appState] = useAtom(appStateAtom);
@@ -14,7 +15,7 @@ const Preview = () => {
 
   return (
     <div
-      className={`w-full overflow-x-auto my-8 px-4 ${
+      className={`w-full overflow-x-auto my-8 px-4 mb-40 ${
         appState.darkMode ? "dark" : ""
       }`}
     >
@@ -199,9 +200,9 @@ const TitleField = () => {
 };
 
 const WatterMark = () => {
-  const [appState] = useAtom(appStateAtom);
+  const [exportSettings] = useAtom(exportSettingsAtom);
 
-  if (!appState.showWaterMark) return null;
+  if (!exportSettings.showWaterMark) return null;
   return (
     <div className="absolute left-4 bottom-2 mix-blend-overlay opacity-50 text-white">
       codetoimg.com

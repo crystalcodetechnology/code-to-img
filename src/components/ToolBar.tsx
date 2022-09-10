@@ -6,9 +6,12 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Select from "@radix-ui/react-select";
 import { useAtom } from "jotai";
 import { appStateAtom } from "../stores/appState";
+import { exportSettingsAtom } from "../stores/exportSettings";
 
 const ToolBar = () => {
   const [appState, setAppState] = useAtom(appStateAtom);
+  const [exportSettings, setExportSettings] = useAtom(exportSettingsAtom);
+
   const { onExport, onCopyAsLink, onCopyAsImage, onReset } = useEditor();
 
   return (
@@ -130,33 +133,33 @@ const ToolBar = () => {
             <SelectItem
               label="Format"
               options={["png", "jpeg", "svg"]}
-              value={appState.renderFormat}
+              value={exportSettings.renderFormat}
               onChange={(value) => {
-                setAppState({
-                  ...appState,
+                setExportSettings({
+                  ...exportSettings,
                   renderFormat: value,
                 });
               }}
             />
             <SelectItem
-              disabled={appState.renderFormat === "svg"}
+              disabled={exportSettings.renderFormat === "svg"}
               label="Scale"
               options={["1x", "2x", "3x"]}
-              value={appState.renderScale}
+              value={exportSettings.renderScale}
               onChange={(value) => {
-                setAppState({
-                  ...appState,
+                setExportSettings({
+                  ...exportSettings,
                   renderScale: value,
                 });
               }}
             />
             <SwitchItem
               label="Show Watermark"
-              value={appState.showWaterMark}
+              value={exportSettings.showWaterMark}
               onChange={() =>
-                setAppState({
-                  ...appState,
-                  showWaterMark: !appState.showWaterMark,
+                setExportSettings({
+                  ...exportSettings,
+                  showWaterMark: !exportSettings.showWaterMark,
                 })
               }
             />

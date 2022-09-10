@@ -9,10 +9,11 @@ import {
 } from "react";
 import { toPng, toJpeg, toSvg, toBlob } from "html-to-image";
 import { Options } from "html-to-image/lib/types";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import { AppState, appStateAtom, initAppState } from "../stores/appState";
+import { exportSettingsAtom } from "../stores/exportSettings";
+import * as gtag from "../lib/gtag";
 
 export type EditorContextType = {
   canvasRef: React.RefObject<HTMLDivElement>;
@@ -25,39 +26,72 @@ export type EditorContextType = {
 export const EditorContext = createContext<EditorContextType | null>(null);
 
 export const EditorProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [settings, setSettings] = useAtom(appStateAtom);
+  const [exportSettings] = useAtom(exportSettingsAtom);
+
   const router = useRouter();
 
   const getSettings = useCallback(async () => {
-    const { token } = router.query;
-    if (token) {
-      setIsLoading(true);
-      const { data } = await axios.get(`/api/hash-object?token=${token}`);
-      setSettings(data);
-      setIsLoading(false);
-      router.push("/");
-    }
-  }, [router, setSettings]);
+    let decodedQuery: any = Object.fromEntries(
+      new URLSearchParams(location.search)
+    );
+    Object.keys(decodedQuery).map((key) => {
+      switch (decodedQuery[key]) {
+        case "true":
+          decodedQuery[key] = true;
+          break;
+
+        case "false":
+          decodedQuery[key] = false;
+          break;
+
+        default:
+          break;
+      }
+    });
+
+    setSettings({
+      ...initAppState,
+      ...decodedQuery,
+    });
+
+    setIsLoading(false);
+  }, [setSettings]);
 
   useEffect(() => {
     getSettings();
   }, [getSettings]);
 
+  useEffect(() => {
+    if (isLoading) return;
+    router.replace({
+      query: settings,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settings, isLoading]);
+
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  const getConvertOptions = (settings: AppState) => {
-    const scale =
-      settings.renderScale === "3x" ? 3 : settings.renderScale === "2x" ? 2 : 1;
-    console.log(scale);
+  const getConvertOptions = useCallback(
+    (settings: AppState) => {
+      const scale =
+        exportSettings.renderScale === "3x"
+          ? 3
+          : exportSettings.renderScale === "2x"
+          ? 2
+          : 1;
+      console.log(scale);
 
-    const options: Options = {
-      canvasWidth: canvasRef.current.clientWidth * scale,
-      canvasHeight: canvasRef.current.clientHeight * scale,
-      quality: 0.95,
-    };
-    return options;
-  };
+      const options: Options = {
+        canvasWidth: canvasRef.current.clientWidth * scale,
+        canvasHeight: canvasRef.current.clientHeight * scale,
+        quality: 0.95,
+      };
+      return options;
+    },
+    [exportSettings.renderScale]
+  );
 
   const onExport: EditorContextType["onExport"] = useCallback(async () => {
     if (!canvasRef.current) return;
@@ -66,12 +100,9 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
 
     var imgUrl: string | null = null;
 
-    const fileExtension = `.${settings.renderFormat.toLowerCase()}`;
+    const fileExtension = `.${exportSettings.renderFormat.toLowerCase()}`;
 
     switch (fileExtension) {
-      case ".png":
-        imgUrl = await toPng(canvasRef.current, options);
-        break;
       case ".jpeg":
         imgUrl = await toJpeg(canvasRef.current, options);
         break;
@@ -84,20 +115,28 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
     }
 
     if (!imgUrl) return;
-
+    const filename = `${settings.filename || "Untitled"}${fileExtension}`;
     const link = document.createElement("a");
-    link.download = `${settings.filename || "Untitled"}${fileExtension}`;
+    link.download = filename;
     link.href = imgUrl;
     link.click();
-  }, [settings, canvasRef]);
+
+    gtag.event({
+      action: "image_export",
+      category: "export",
+      label: location.href,
+    });
+  }, [getConvertOptions, settings, exportSettings.renderFormat]);
 
   const onCopyAsLink: EditorContextType["onCopyAsLink"] =
     useCallback(async () => {
-      const origin = window.location.origin;
-      const { data } = await axios.post(`/api/hash-object`, settings);
-      const link = `${origin}?token=${data.token}`;
-      window.navigator.clipboard.writeText(link);
-    }, [settings]);
+      window.navigator.clipboard.writeText(location.href);
+      gtag.event({
+        action: "copy_link",
+        category: "export",
+        label: location.href,
+      });
+    }, []);
 
   const onCopyAsImage: EditorContextType["onCopyAsImage"] =
     useCallback(async () => {
@@ -108,10 +147,19 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
         new ClipboardItem({ "image/png": blog }),
       ]);
       console.log("Copied");
-    }, [settings]);
+      gtag.event({
+        action: "copy_image",
+        category: "export",
+        label: location.href,
+      });
+    }, [getConvertOptions, settings]);
 
   const onReset = () => {
     setSettings(initAppState);
+    gtag.event({
+      action: "reset",
+      category: "reset",
+    });
   };
   if (isLoading) return null;
 

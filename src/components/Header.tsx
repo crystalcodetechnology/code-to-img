@@ -14,7 +14,7 @@ const Header = () => {
             />
             <p>
               <span className="font-bold text-xl text-white">CodeToImg</span>
-              <span className="text-xs ml-1">v1.2.0</span>
+              <span className="text-xs ml-1">v1.3.0</span>
             </p>
           </a>
         </Link>
