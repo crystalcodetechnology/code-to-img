@@ -5,14 +5,17 @@ import Editor from "./Editor/Editor";
 import { isDark } from "../utils";
 import { getExtentions } from "./Editor/get-extentions";
 import { darkTheme, lightTheme } from "./Editor/themes";
+import { useAtom } from "jotai";
+import { appStateAtom } from "../stores/appState";
 
 const Preview = () => {
-  const { settings, canvasRef, getPadding } = useEditor();
+  const [appState] = useAtom(appStateAtom);
+  const { canvasRef } = useEditor();
 
   return (
     <div
       className={`w-full overflow-x-auto my-8 px-4 ${
-        settings.darkMode ? "dark" : ""
+        appState.darkMode ? "dark" : ""
       }`}
     >
       <div
@@ -25,9 +28,9 @@ const Preview = () => {
           ref={canvasRef}
           className="bg-no-repeat bg-cover bg-center relative"
           style={{
-            padding: getPadding(),
-            backgroundImage: settings.backgroundImage,
-            backgroundColor: settings.backgroundColor,
+            padding: appState.padding,
+            backgroundImage: appState.backgroundImage,
+            backgroundColor: appState.backgroundColor,
           }}
         >
           <TitleField />
@@ -45,75 +48,77 @@ const Window = () => {
   const [bgWidth, setBgWidth] = useState(0);
   const [bgHeight, setBgHeight] = useState(0);
   const [extentions, setExtentions] = useState<Extension[] | undefined>([]);
-  const { settings, setSettings, canvasRef, getPadding } = useEditor();
+  const [appState, setAppState] = useAtom(appStateAtom);
+
+  const { canvasRef } = useEditor();
 
   const theme = useMemo(
-    () => (settings.darkMode ? darkTheme : lightTheme),
-    [settings.darkMode]
+    () => (appState.darkMode ? darkTheme : lightTheme),
+    [appState.darkMode]
   );
 
   const onCodeChange = useCallback(
     (value: string) => {
-      setSettings({
-        ...settings,
+      setAppState({
+        ...appState,
         code: value,
       });
     },
-    [settings, setSettings]
+    [appState, setAppState]
   );
 
   useEffect(() => {
-    setExtentions(getExtentions(settings.language));
-  }, [settings.language]);
+    setExtentions(getExtentions(appState.language));
+  }, [appState.language]);
 
   useEffect(() => {
     if (canvasRef.current) {
       setBgWidth(canvasRef.current.clientWidth);
       setBgHeight(canvasRef.current.clientHeight);
     }
-  }, [settings.padding, settings.code, settings.title, canvasRef]);
+  }, [appState.padding, appState.code, appState.title, canvasRef]);
 
   return (
     <div
       className="dark:bg-gray-800 rounded-2xl bg-white text-gray-800 dark:text-gray-100 shadow-2xl border-black/30 border dark:border-white/30 relative overflow-hidden"
       style={{
         boxShadow: `0 0 0 1px ${
-          settings.darkMode ? "rgba(0, 0, 0, 0.3)" : "rgba(255, 255, 255, 0.3)"
+          appState.darkMode ? "rgba(0, 0, 0, 0.3)" : "rgba(255, 255, 255, 0.3)"
         } ${
-          settings.dropShadow ? ", 0px 12px 30px -3px rgba(0, 0, 0, 0.4)" : ""
+          appState.dropShadow ? ", 0px 12px 30px -3px rgba(0, 0, 0, 0.4)" : ""
         }`,
         zIndex: 10,
       }}
     >
       <div
         style={{
-          backgroundImage: settings.backgroundThumb,
-          backgroundColor: settings.backgroundColor,
+          backgroundImage: appState.backgroundThumb,
+          backgroundColor: appState.backgroundColor,
           width: bgWidth,
           height: bgHeight,
-          left: `-${getPadding()}`,
-          top: `-${getPadding()}`,
+          left: `-${appState.padding}`,
+          top: `-${appState.padding}`,
           zIndex: -5,
-          opacity: settings.bgBlur ? 0.3 : 0,
-          filter: `blur(${settings.bgBlur ? 60 : 0}px)`,
+          opacity: appState.bgBlur ? 0.3 : 0,
+          filter: `blur(${appState.bgBlur ? 60 : 0}px)`,
         }}
         className="w-full h-full absolute inset-0 bg-no-repeat bg-cover bg-center"
       />
       <WindowTitleBar />
       <Editor
-        value={settings.code}
+        value={appState.code}
         onChange={onCodeChange}
         extensions={extentions}
         theme={theme}
         basicSetup={{
           foldGutter: false,
           allowMultipleSelections: false,
-          lineNumbers: settings.showLineNumber,
+          lineNumbers: appState.showLineNumber,
           highlightActiveLine: false,
         }}
         style={{
           outline: "none",
-          fontSize: settings.fontSize,
+          fontSize: appState.fontSize,
         }}
       />
     </div>
@@ -121,7 +126,8 @@ const Window = () => {
 };
 
 const WindowTitleBar = () => {
-  const { settings, setSettings } = useEditor();
+  const [appState, setAppState] = useAtom(appStateAtom);
+
   return (
     <div className="px-4 h-12 flex items-center gap-8 z-20">
       <div className="flex items-center gap-2 h-full">
@@ -130,12 +136,12 @@ const WindowTitleBar = () => {
         <div className="w-3 h-3 rounded-full bg-green-500" />
       </div>
       <input
-        value={settings.filename}
+        value={appState.filename}
         translate="no"
         autoCorrect="off"
         onChange={(e) => {
-          setSettings({
-            ...settings,
+          setAppState({
+            ...appState,
             filename: e.target.value,
           });
         }}
@@ -151,33 +157,33 @@ const WindowTitleBar = () => {
 };
 
 const TitleField = () => {
-  const { settings, setSettings, getPadding } = useEditor();
+  const [appState, setAppState] = useAtom(appStateAtom);
 
   const handleChange = useCallback(
     (e: any) => {
-      setSettings({
-        ...settings,
+      setAppState({
+        ...appState,
         title: e.target.innerText,
       });
     },
-    [settings, setSettings]
+    [appState, setAppState]
   );
 
-  if (!settings.showTitle) return null;
+  if (!appState.showTitle) return null;
 
   return (
     <div
       className="flex items-center justify-center w-full"
       style={{
-        paddingBottom: getPadding(),
+        paddingBottom: appState.padding,
       }}
     >
       <div
         className="w-full text-3xl bg-transparent outline-none border-none text-center placeholder-white/50 p-0 font-bold resize-none selection:bg-blue-500 inline-block"
         style={{
-          color: settings.backgroundImage
+          color: appState.backgroundImage
             ? "#fff"
-            : isDark(settings.backgroundColor)
+            : isDark(appState.backgroundColor)
             ? "#fff"
             : "#000",
           // 2.25 is the lineheight of the textarea
@@ -186,15 +192,16 @@ const TitleField = () => {
         spellCheck="false"
         onBlur={handleChange}
         contentEditable
-        dangerouslySetInnerHTML={{ __html: settings.title }}
+        dangerouslySetInnerHTML={{ __html: appState.title }}
       />
     </div>
   );
 };
 
 const WatterMark = () => {
-  const { settings } = useEditor();
-  if (!settings.showWaterMark) return null;
+  const [appState] = useAtom(appStateAtom);
+
+  if (!appState.showWaterMark) return null;
   return (
     <div className="absolute left-4 bottom-2 mix-blend-overlay opacity-50 text-white">
       codetoimg.com

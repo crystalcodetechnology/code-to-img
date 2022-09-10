@@ -38,7 +38,7 @@ const Header = () => {
       </a>
       <div className="md:flex items-center gap-2 hidden">
         <ByMeACoffeeButton />
-        <ProductHuntBadge />
+        {/* <ProductHuntBadge /> */}
       </div>
     </div>
   );

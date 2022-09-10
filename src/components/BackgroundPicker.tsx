@@ -1,9 +1,10 @@
 import * as Popover from "@radix-ui/react-popover";
 import axios from "axios";
+import { useAtom } from "jotai";
 import { useCallback, useEffect, useState } from "react";
-import { useEditor } from "../contexts/EditorContext";
 import { colors } from "../data/colors";
 import { gradients } from "../data/gradients";
+import { appStateAtom } from "../stores/appState";
 
 export const backgroundWindowTabs = [
   {
@@ -22,7 +23,7 @@ export const backgroundWindowTabs = [
 
 export const BackgroundPicker = () => {
   const [tab, setTab] = useState(backgroundWindowTabs[0].id);
-  const { settings } = useEditor();
+  const [appState] = useAtom(appStateAtom);
   return (
     <div className="flex flex-col gap-2">
       <label className="text-xs text-white/30" htmlFor="background-input">
@@ -34,11 +35,11 @@ export const BackgroundPicker = () => {
             id="background-input"
             className="h-7 w-12 rounded-md ring-1 ring-white/20 bg-no-repeat bg-cover"
             style={{
-              backgroundColor: settings.backgroundColor,
+              backgroundColor: appState.backgroundColor,
               backgroundImage:
-                settings.backgroundColor === "transparent"
+                appState.backgroundColor === "transparent"
                   ? "url(/transparent-bg-pattern.png)"
-                  : settings.backgroundThumb,
+                  : appState.backgroundThumb,
             }}
           />
         </Popover.Trigger>
@@ -73,17 +74,17 @@ export const BackgroundPicker = () => {
 };
 
 const ColorsPanel = () => {
-  const { settings, setSettings } = useEditor();
+  const [appState, setAppState] = useAtom(appStateAtom);
   const setColor = useCallback(
     (color: string) => {
-      setSettings({
-        ...settings,
+      setAppState({
+        ...appState,
         backgroundImage: undefined,
         backgroundThumb: undefined,
         backgroundColor: color,
       });
     },
-    [settings, setSettings]
+    [appState, setAppState]
   );
   return (
     <ul className="grid grid-cols-3 gap-4 p-4">
@@ -107,7 +108,8 @@ const ColorsPanel = () => {
 };
 
 const GradientsPanel = () => {
-  const { settings, setSettings } = useEditor();
+  const [appState, setAppState] = useAtom(appStateAtom);
+
   return (
     <ul className="grid grid-cols-2 gap-4 p-4">
       {gradients.map((gradient, i) => (
@@ -119,8 +121,8 @@ const GradientsPanel = () => {
               backgroundImage: gradient.gradient,
             }}
             onClick={() =>
-              setSettings({
-                ...settings,
+              setAppState({
+                ...appState,
                 backgroundColor: gradient.color,
                 backgroundImage: gradient.gradient,
                 backgroundThumb: gradient.gradient,
@@ -152,7 +154,7 @@ type UnsplashImageType = {
 };
 
 const UnsplashPanel = () => {
-  const { settings, setSettings } = useEditor();
+  const [appState, setAppState] = useAtom(appStateAtom);
   const [images, setImages] = useState<UnsplashImageType[]>([]);
   const [searchKey, setSearchKey] = useState("");
 
@@ -213,8 +215,8 @@ const UnsplashPanel = () => {
                 backgroundImage: `url(${image.urls.thumb})`,
               }}
               onClick={() =>
-                setSettings({
-                  ...settings,
+                setAppState({
+                  ...appState,
                   backgroundColor: image.color,
                   backgroundImage: `url(${image.urls.small})`,
                   backgroundThumb: `url(${image.urls.thumb})`,

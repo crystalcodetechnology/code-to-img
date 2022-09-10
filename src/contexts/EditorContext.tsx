@@ -4,82 +4,29 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
-import { gradients } from "../data/gradients";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import { toPng, toJpeg, toSvg, toBlob } from "html-to-image";
 import { Options } from "html-to-image/lib/types";
 import axios from "axios";
 import { useRouter } from "next/router";
-
-export type EditorSettings = {
-  filename: string;
-  title: string;
-  code: string;
-  darkMode: boolean;
-  dropShadow: boolean;
-  showTitle: boolean;
-  bgBlur: boolean;
-  showWaterMark: boolean;
-  fontSize: string;
-  padding: string;
-  language: string;
-  backgroundColor?: string;
-  backgroundImage?: string;
-  backgroundThumb?: string;
-  showLineNumber: boolean;
-  renderScale: string;
-  renderFormat: string;
-};
-
-const DEFAULT_JS_VALUE = `function hello() {
-  console.log("Hello, World!");
-}
-
-hello();`;
-
-const defaultSettings: EditorSettings = {
-  filename: "Untitled",
-  darkMode: true,
-  dropShadow: true,
-  showTitle: false,
-  showLineNumber: true,
-  showWaterMark: true,
-  bgBlur: true,
-  fontSize: "16px",
-  language: "javascript",
-  padding: "medium",
-  title: "Title Text",
-  code: DEFAULT_JS_VALUE,
-  backgroundImage: gradients[0].gradient,
-  backgroundThumb: gradients[0].gradient,
-  backgroundColor: gradients[0].color,
-  renderScale: "1x",
-  renderFormat: "png",
-};
+import { useAtom } from "jotai";
+import { AppState, appStateAtom, initAppState } from "../stores/appState";
 
 export type EditorContextType = {
-  settings: EditorSettings;
-  setSettings: (newState: EditorSettings) => void;
   canvasRef: React.RefObject<HTMLDivElement>;
   onExport: () => void;
   onReset: () => void;
   onCopyAsLink: () => void;
   onCopyAsImage: () => void;
-  getPadding: () => string;
 };
+
 export const EditorContext = createContext<EditorContextType | null>(null);
 
 export const EditorProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [settings, setSettings] = useLocalStorage<EditorSettings>({
-    key: "editor-settings",
-    value: defaultSettings,
-  });
-
+  const [settings, setSettings] = useAtom(appStateAtom);
   const router = useRouter();
 
   const getSettings = useCallback(async () => {
@@ -99,7 +46,7 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
 
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  const getConvertOptions = (settings: EditorSettings) => {
+  const getConvertOptions = (settings: AppState) => {
     const scale =
       settings.renderScale === "3x" ? 3 : settings.renderScale === "2x" ? 2 : 1;
     console.log(scale);
@@ -164,34 +111,18 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
     }, [settings]);
 
   const onReset = () => {
-    setSettings(defaultSettings);
+    setSettings(initAppState);
   };
-
-  const getPadding = useCallback(() => {
-    return `${
-      settings.padding === "small"
-        ? 36
-        : settings.padding === "medium"
-        ? 48
-        : settings.padding === "large"
-        ? 64
-        : 96
-    }px`;
-  }, [settings.padding]);
-
   if (isLoading) return null;
 
   return (
     <EditorContext.Provider
       value={{
-        settings,
-        setSettings,
         canvasRef,
         onExport,
         onCopyAsLink,
         onCopyAsImage,
         onReset,
-        getPadding,
       }}
     >
       {children}
