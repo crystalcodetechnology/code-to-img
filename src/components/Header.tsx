@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
+import BuyMeACoffeeButton from "./BuyMeACoffeeButton";
+
 const Header = () => {
   return (
     <div className="w-full py-4 flex items-center px-4 gap-6">
@@ -29,7 +31,7 @@ const Header = () => {
       </div>
       <div className="flex-1"></div>
       <a
-        href="https://github.com/rohid-dev/code-to-img"
+        href="https://github.com/rohid2d/code-to-img"
         target="_blank"
         rel="noreferrer"
         className="w-10 h-10 flex items-center justify-center hover:bg-white/10 active:bg-white/20 rounded-full"
@@ -37,7 +39,7 @@ const Header = () => {
         <FaGithub className="text-2xl" />
       </a>
       <div className="md:flex items-center gap-2 hidden">
-        <ByMeACoffeeButton />
+        <BuyMeACoffeeButton />
         {/* <ProductHuntBadge /> */}
       </div>
     </div>
@@ -45,17 +47,6 @@ const Header = () => {
 };
 
 export default Header;
-
-const ByMeACoffeeButton = () => (
-  <a href="https://www.buymeacoffee.com/rohid" target="_blank" rel="noreferrer">
-    <img
-      src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-      alt="Buy Me A Coffee"
-      height="40px"
-      width="140px"
-    />
-  </a>
-);
 
 export const ProductHuntBadge = () => (
   // <a

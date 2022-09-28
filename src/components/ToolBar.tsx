@@ -7,13 +7,13 @@ import * as Select from "@radix-ui/react-select";
 import { useAtom } from "jotai";
 import { appStateAtom } from "../stores/appState";
 import { exportSettingsAtom } from "../stores/exportSettings";
+import { useSupportDialog } from "../contexts/SupportDialogContext";
 
 const ToolBar = () => {
   const [appState, setAppState] = useAtom(appStateAtom);
   const [exportSettings, setExportSettings] = useAtom(exportSettingsAtom);
-
   const { onExport, onCopyAsLink, onCopyAsImage, onReset } = useEditor();
-
+  const { openSupportDialog } = useSupportDialog();
   return (
     <div className="fixed bottom-0 w-full left-0 right-0 p-4 md:p-8 z-20 pointer-events-none">
       <div className="mx-auto max-w-fit min-w-0 pointer-events-auto">
@@ -156,24 +156,27 @@ const ToolBar = () => {
             <SwitchItem
               label="Show Watermark"
               value={exportSettings.showWaterMark}
-              onChange={() =>
+              onChange={() => {
                 setExportSettings({
                   ...exportSettings,
                   showWaterMark: !exportSettings.showWaterMark,
-                })
-              }
+                });
+                if (exportSettings.showWaterMark) {
+                  openSupportDialog();
+                }
+              }}
             />
             <div className="flex h-10 rounded-md">
               <button
                 onClick={() => onExport()}
-                className="bg-primary-500 hover:bg-primary-600 px-4 flex items-center justify-center h-full border-r border-r-primary-600 truncate rounded-l-md"
+                className="bg-primary-500 hover:bg-primary-600 px-4 flex items-center justify-center h-full border-r border-r-primary-600 truncate rounded-l-md text-white"
               >
                 Export
               </button>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger asChild>
                   <button className="bg-primary-500 hover:bg-primary-600 w-10 flex items-center justify-center h-full truncate rounded-r-md">
-                    <MdArrowDropDown className="text-2xl" />
+                    <MdArrowDropDown className="text-2xl text-white" />
                   </button>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content
@@ -184,13 +187,23 @@ const ToolBar = () => {
                 >
                   <DropdownMenu.Item
                     className="outline-none cursor-pointer px-4 h-8 rounded focus:bg-primary-500 focus:text-white flex items-center gap-2"
-                    onClick={() => onCopyAsLink()}
+                    onClick={() => {
+                      onCopyAsLink();
+                      if (Math.random() > 0.4) {
+                        openSupportDialog();
+                      }
+                    }}
                   >
                     Copy URL
                   </DropdownMenu.Item>
                   <DropdownMenu.Item
                     className="outline-none cursor-pointer px-4 h-8 rounded focus:bg-primary-500 focus:text-white flex items-center gap-2"
-                    onClick={() => onCopyAsImage()}
+                    onClick={() => {
+                      onCopyAsImage();
+                      if (Math.random() > 0.4) {
+                        openSupportDialog();
+                      }
+                    }}
                   >
                     Copy Image
                   </DropdownMenu.Item>
