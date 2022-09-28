@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaTwitter } from "react-icons/fa";
 import BuyMeACoffeeButton from "./BuyMeACoffeeButton";
 
 const Header = () => {
   return (
-    <div className="w-full py-4 flex items-center px-4 gap-6">
+    <div className="w-full py-4 flex items-center px-4 gap-4">
       <div className="inline-flex gap-6 items-center">
         <Link href="/">
           <a className="flex gap-2 items-center">
@@ -30,6 +30,14 @@ const Header = () => {
         </p>
       </div>
       <div className="flex-1"></div>
+      <a
+        href="https://twitter.com/codetoimg"
+        target="_blank"
+        rel="noreferrer"
+        className="w-10 h-10 flex items-center justify-center hover:bg-white/10 active:bg-white/20 rounded-full"
+      >
+        <FaTwitter className="text-2xl" />
+      </a>
       <a
         href="https://github.com/rohid2d/code-to-img"
         target="_blank"
