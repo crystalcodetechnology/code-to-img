@@ -20,8 +20,8 @@ const SEO = () => {
 
         {/* TWITTER */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@rohid_dev" />
-        <meta name="twitter:creator" content="@rohid_dev" />
+        <meta name="twitter:site" content="@codetoimg" />
+        <meta name="twitter:creator" content="@codetoimg" />
         <meta name="twitter:title" content={TITLE} />
         <meta name="twitter:description" content={DESCRIPTION} />
         <meta name="twitter:image" content={`${URL}/twitter-card.png`} />
