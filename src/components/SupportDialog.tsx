@@ -9,7 +9,7 @@ const SupportDialog = () => {
   return (
     <div
       className={clsx([
-        "fixed inset-0 w-full h-full z-50 flex justify-center py-20 px-8 overflow-y-auto transition-colors duration-500 ease-in-out",
+        "fixed inset-0 w-full h-full z-50 flex justify-center py-24 px-8 overflow-y-auto transition-colors duration-300 ease-in-out",
         {
           "bg-black/50 pointer-events-auto": isShowing,
           "pointer-events-none": !isShowing,
@@ -18,8 +18,8 @@ const SupportDialog = () => {
     >
       <div
         className={clsx([
-          "bg-gray-800/80 backdrop-blur-md border border-gray-700 w-full max-w-xl p-8 h-fit rounded-xl text-white shadow-xl transition-all duration-500 ease-in-out",
-          { "translate-y-[-200px] opacity-0": !isShowing },
+          "bg-gray-800/80 backdrop-blur-md border border-gray-700 w-full max-w-xl p-8 h-fit rounded-xl text-white shadow-xl transition-all duration-300 ease-in-out",
+          { "translate-y-[-100px] opacity-0": !isShowing },
         ])}
       >
         <div>
