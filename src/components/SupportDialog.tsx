@@ -35,12 +35,12 @@ const SupportDialog = () => {
               </a>
             </Link>{" "}
             ✌️. Creator of <b>CodeToImg</b>. I&apos;m an indie full-stack
-            freelance developer based in beautiful Bangladesh 🇧🇩. I make
-            software and services that help people like you and me in their
-            daily life. This service is 100% ad-free 🥳. I don&apos;t want to
-            break the user experience by showing ads to my users. BTW, You can
-            still support me and the development of this and many other future
-            projects by buying me a cup of coffee ☕.
+            freelance developer living in Bangladesh 🇧🇩. I make software and
+            services that help people like you and me in their daily life. This
+            service is 100% ad-free 🥳. I don&apos;t want to break the user
+            experience by showing ads to my users. BTW, You can still support me
+            and the development of this and many other future projects by buying
+            me a cup of coffee ☕.
           </p>
           <p className="my-4">
             Hey, you don&apos;t have to do this, but I would really appreciate
