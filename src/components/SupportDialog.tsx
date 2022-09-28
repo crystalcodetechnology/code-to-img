@@ -19,7 +19,10 @@ const SupportDialog = () => {
       <div
         className={clsx([
           "bg-gray-800/80 backdrop-blur-md border border-gray-700 w-full max-w-xl p-8 h-fit rounded-xl text-white shadow-xl transition-all duration-300 ease-in-out",
-          { "translate-y-[-100px] opacity-0": !isShowing },
+          {
+            "translate-y-[-100px] opacity-0": !isShowing,
+            "translate-y-0 opacity-100": isShowing,
+          },
         ])}
       >
         <div>
