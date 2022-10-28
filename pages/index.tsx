@@ -1,4 +1,6 @@
 import { useAtom } from "jotai";
+import Head from "next/head";
+import Script from "next/script";
 import Preview from "../src/components/Preview";
 import ToolBar from "../src/components/ToolBar";
 import { appStateAtom } from "../src/stores/appState";

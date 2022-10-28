@@ -25,6 +25,21 @@ const MyDocument = () => {
                 `,
           }}
         />
+
+        <Script
+          id="buymeacoffee-widget"
+          strategy="beforeInteractive"
+          data-name="BMC-Widget"
+          data-cfasync="false"
+          src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+          data-id="rohid"
+          data-description="Support me on Buy me a coffee!"
+          data-message=""
+          data-color="#6366F1"
+          data-position="Right"
+          data-x_margin="24"
+          data-y_margin="156"
+        ></Script>
       </Head>
       <body>
         <Main />
