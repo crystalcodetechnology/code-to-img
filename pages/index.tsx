@@ -7,19 +7,19 @@ function IndexPage() {
   return (
     <>
       <Backgorund />
-      <div id="ezoic-pub-ad-placeholder-101"> </div>
-      <div className="flex gap-8">
-        <aside className="space-y-8">
-          <div id="ezoic-pub-ad-placeholder-104"> </div>
-          <div id="ezoic-pub-ad-placeholder-105"> </div>
-        </aside>
-        <Preview />
-        <aside className="space-y-8">
+      <div className="flex">
+        <aside>
           <div id="ezoic-pub-ad-placeholder-102"> </div>
+        </aside>
+        <div className="w-fit">
+          <div id="ezoic-pub-ad-placeholder-101"> </div>
+          <Preview />
+        </div>
+        <aside>
+          <div id="ezoic-pub-ad-placeholder-106"> </div>
           <div id="ezoic-pub-ad-placeholder-103"> </div>
         </aside>
       </div>
-
       <ToolBar />
     </>
   );
