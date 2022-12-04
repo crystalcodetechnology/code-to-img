@@ -7,7 +7,7 @@ function IndexPage() {
   return (
     <>
       <Backgorund />
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-6">
         <aside>
           <div id="ezoic-pub-ad-placeholder-103"> </div>
         </aside>
