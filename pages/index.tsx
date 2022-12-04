@@ -9,6 +9,7 @@ function IndexPage() {
   return (
     <>
       <Backgorund />
+      <div id="ezoic-pub-ad-placeholder-101"> </div>
       <Preview />
       <ToolBar />
     </>
