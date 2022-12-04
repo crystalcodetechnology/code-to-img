@@ -7,9 +7,9 @@ function IndexPage() {
   return (
     <>
       <Backgorund />
-      <div className="flex">
+      <div className="flex justify-center">
         <aside>
-          <div id="ezoic-pub-ad-placeholder-102"> </div>
+          <div id="ezoic-pub-ad-placeholder-103"> </div>
         </aside>
         <div className="w-fit">
           <div id="ezoic-pub-ad-placeholder-101"> </div>
@@ -17,7 +17,7 @@ function IndexPage() {
         </div>
         <aside>
           <div id="ezoic-pub-ad-placeholder-106"> </div>
-          <div id="ezoic-pub-ad-placeholder-103"> </div>
+          <div id="ezoic-pub-ad-placeholder-104"> </div>
         </aside>
       </div>
       <ToolBar />
