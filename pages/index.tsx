@@ -1,6 +1,4 @@
 import { useAtom } from "jotai";
-import Head from "next/head";
-import Script from "next/script";
 import Preview from "../src/components/Preview";
 import ToolBar from "../src/components/ToolBar";
 import { appStateAtom } from "../src/stores/appState";
@@ -10,7 +8,18 @@ function IndexPage() {
     <>
       <Backgorund />
       <div id="ezoic-pub-ad-placeholder-101"> </div>
-      <Preview />
+      <div className="flex gap-8">
+        <aside className="space-y-8">
+          <div id="ezoic-pub-ad-placeholder-104"> </div>
+          <div id="ezoic-pub-ad-placeholder-105"> </div>
+        </aside>
+        <Preview />
+        <aside className="space-y-8">
+          <div id="ezoic-pub-ad-placeholder-102"> </div>
+          <div id="ezoic-pub-ad-placeholder-103"> </div>
+        </aside>
+      </div>
+
       <ToolBar />
     </>
   );

@@ -40,19 +40,6 @@ const MyDocument = () => {
           data-x_margin="24"
           data-y_margin="156"
         ></Script>
-
-        <Script
-          id="ezoic-code"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: "var ezoicId = 411426;",
-          }}
-        ></Script>
-        <Script
-          strategy="beforeInteractive"
-          type="text/javascript"
-          src="//go.ezoic.net/ezoic/ezoic.js"
-        ></Script>
       </Head>
       <body>
         <Main />
