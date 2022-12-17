@@ -79,7 +79,7 @@ const Window = () => {
 
   return (
     <div
-      className="dark:bg-gray-800 rounded-2xl bg-white text-gray-800 dark:text-gray-100 shadow-2xl border-black/30 border dark:border-white/30 relative overflow-hidden"
+      className="dark:bg-gray-800 rounded-xl bg-white text-gray-800 dark:text-gray-100 shadow-2xl border-black/30 border dark:border-white/30 relative overflow-hidden"
       style={{
         boxShadow: `0 0 0 1px ${
           appState.darkMode ? "rgba(0, 0, 0, 0.3)" : "rgba(255, 255, 255, 0.3)"

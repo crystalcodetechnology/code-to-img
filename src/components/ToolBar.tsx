@@ -13,7 +13,7 @@ const ToolBar = () => {
   const [exportSettings, setExportSettings] = useAtom(exportSettingsAtom);
   const { onExport, onCopyAsLink, onCopyAsImage, onReset } = useEditor();
   return (
-    <div className="fixed bottom-0 w-full left-0 right-0 p-4 md:p-8 z-20 pointer-events-none">
+    <div className="fixed bottom-[90px] w-full left-0 right-0 p-4 z-20 pointer-events-none">
       <div className="mx-auto max-w-fit min-w-0 pointer-events-auto">
         <div className="bg-gray-900/60 ring-offset-white/20 ring-offset-1 rounded-2xl backdrop-blur-xl ring-1 ring-black/40 shadow-2xl">
           <div className="flex gap-4 p-4 overflow-x-auto items-center">
