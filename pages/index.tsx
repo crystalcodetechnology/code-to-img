@@ -30,7 +30,7 @@ function IndexPage() {
         </aside>
       </div>
       <ToolBar />
-      <div className="w-full fixed bottom-0 bg-gray-900/50 backdrop-blur-xl z-30">
+      <div className="w-full fixed bottom-0 bg-gray-900/50 backdrop-blur-xl z-10">
         <div className="mx-auto h-[90px] w-[970px]">
           <div id="ezoic-pub-ad-placeholder-121"> </div>
         </div>
