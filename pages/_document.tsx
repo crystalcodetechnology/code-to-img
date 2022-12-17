@@ -6,16 +6,6 @@ const MyDocument = () => {
   return (
     <Html>
       <Head>
-        <Script id="ezoic-ad-id" strategy="beforeInteractive">
-          {`
-            var ezoicId = 411426;
-          `}
-        </Script>
-        <Script
-          strategy="beforeInteractive"
-          type="text/javascript"
-          src="//go.ezoic.net/ezoic/ezoic.js"
-        ></Script>
         <Script
           strategy="beforeInteractive"
           async
