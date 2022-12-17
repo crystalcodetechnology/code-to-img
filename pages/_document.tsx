@@ -6,25 +6,31 @@ const MyDocument = () => {
   return (
     <Html>
       <Head>
+        <Script id="ezoic-ad-id" strategy="beforeInteractive">
+          {`
+            var ezoicId = 411426;
+          `}
+        </Script>
+        <Script
+          strategy="beforeInteractive"
+          type="text/javascript"
+          src="//go.ezoic.net/ezoic/ezoic.js"
+        ></Script>
         <Script
           strategy="beforeInteractive"
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
         ></Script>
-        <Script
-          id="google-analytics"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{
-            __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', '${GA_TRACKING_ID}', {
-                    page_path: window.location.pathname,
-                  });
-                `,
-          }}
-        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
 
         <Script
           id="buymeacoffee-widget"
@@ -38,7 +44,7 @@ const MyDocument = () => {
           data-color="#6366F1"
           data-position="Right"
           data-x_margin="24"
-          data-y_margin="156"
+          data-y_margin="24"
         ></Script>
       </Head>
       <body>
