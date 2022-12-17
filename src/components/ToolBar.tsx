@@ -7,13 +7,11 @@ import * as Select from "@radix-ui/react-select";
 import { useAtom } from "jotai";
 import { appStateAtom } from "../stores/appState";
 import { exportSettingsAtom } from "../stores/exportSettings";
-import { useSupportDialog } from "../contexts/SupportDialogContext";
 
 const ToolBar = () => {
   const [appState, setAppState] = useAtom(appStateAtom);
   const [exportSettings, setExportSettings] = useAtom(exportSettingsAtom);
   const { onExport, onCopyAsLink, onCopyAsImage, onReset } = useEditor();
-  const { openSupportDialog } = useSupportDialog();
   return (
     <div className="fixed bottom-0 w-full left-0 right-0 p-4 md:p-8 z-20 pointer-events-none">
       <div className="mx-auto max-w-fit min-w-0 pointer-events-auto">
@@ -161,9 +159,6 @@ const ToolBar = () => {
                   ...exportSettings,
                   showWaterMark: !exportSettings.showWaterMark,
                 });
-                if (exportSettings.showWaterMark) {
-                  openSupportDialog();
-                }
               }}
             />
             <div className="flex h-10 rounded-md">
@@ -189,9 +184,6 @@ const ToolBar = () => {
                     className="outline-none cursor-pointer px-4 h-8 rounded focus:bg-primary-500 focus:text-white flex items-center gap-2"
                     onClick={() => {
                       onCopyAsLink();
-                      if (Math.random() > 0.4) {
-                        openSupportDialog();
-                      }
                     }}
                   >
                     Copy URL
@@ -200,9 +192,6 @@ const ToolBar = () => {
                     className="outline-none cursor-pointer px-4 h-8 rounded focus:bg-primary-500 focus:text-white flex items-center gap-2"
                     onClick={() => {
                       onCopyAsImage();
-                      if (Math.random() > 0.4) {
-                        openSupportDialog();
-                      }
                     }}
                   >
                     Copy Image

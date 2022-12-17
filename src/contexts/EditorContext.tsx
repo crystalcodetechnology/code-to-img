@@ -14,7 +14,6 @@ import { useAtom } from "jotai";
 import { AppState, appStateAtom, initAppState } from "../stores/appState";
 import { exportSettingsAtom } from "../stores/exportSettings";
 import * as gtag from "../lib/gtag";
-import { useSupportDialog } from "./SupportDialogContext";
 
 export type EditorContextType = {
   canvasRef: React.RefObject<HTMLDivElement>;
@@ -30,7 +29,6 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [settings, setSettings] = useAtom(appStateAtom);
   const [exportSettings] = useAtom(exportSettingsAtom);
-  const { openSupportDialog } = useSupportDialog();
 
   const router = useRouter();
 
@@ -97,44 +95,38 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
 
   const onExport: EditorContextType["onExport"] = useCallback(async () => {
     if (!canvasRef.current) return;
-    openSupportDialog(async () => {
-      const options = getConvertOptions(settings);
 
-      var imgUrl: string | null = null;
+    const options = getConvertOptions(settings);
 
-      const fileExtension = `.${exportSettings.renderFormat.toLowerCase()}`;
+    var imgUrl: string | null = null;
 
-      switch (fileExtension) {
-        case ".jpeg":
-          imgUrl = await toJpeg(canvasRef.current, options);
-          break;
-        case ".svg":
-          imgUrl = await toSvg(canvasRef.current, options);
-          break;
-        default:
-          imgUrl = await toPng(canvasRef.current, options);
-          break;
-      }
+    const fileExtension = `.${exportSettings.renderFormat.toLowerCase()}`;
 
-      if (!imgUrl) return;
-      const filename = `${settings.filename || "Untitled"}${fileExtension}`;
-      const link = document.createElement("a");
-      link.download = filename;
-      link.href = imgUrl;
-      link.click();
+    switch (fileExtension) {
+      case ".jpeg":
+        imgUrl = await toJpeg(canvasRef.current, options);
+        break;
+      case ".svg":
+        imgUrl = await toSvg(canvasRef.current, options);
+        break;
+      default:
+        imgUrl = await toPng(canvasRef.current, options);
+        break;
+    }
 
-      gtag.event({
-        action: "image_export",
-        category: "export",
-        label: location.href,
-      });
+    if (!imgUrl) return;
+    const filename = `${settings.filename || "Untitled"}${fileExtension}`;
+    const link = document.createElement("a");
+    link.download = filename;
+    link.href = imgUrl;
+    link.click();
+
+    gtag.event({
+      action: "image_export",
+      category: "export",
+      label: location.href,
     });
-  }, [
-    getConvertOptions,
-    settings,
-    exportSettings.renderFormat,
-    openSupportDialog,
-  ]);
+  }, [getConvertOptions, settings, exportSettings.renderFormat]);
 
   const onCopyAsLink: EditorContextType["onCopyAsLink"] =
     useCallback(async () => {

@@ -14,7 +14,7 @@ const Header = () => {
               alt="CodeToImg Logo"
               className="w-9 h-9"
             />
-            <p>
+            <p className="hidden lg:inline">
               <span className="font-bold text-xl text-white">CodeToImg</span>
               <span className="text-xs ml-1">v1.3.0</span>
             </p>
@@ -28,6 +28,11 @@ const Header = () => {
             </a>
           </Link>
         </p>
+        <Link href="https://codetoimg.com/privacy-policy.html">
+          <a target="_blank" className="hover:text-gray-50">
+            Privacy
+          </a>
+        </Link>
       </div>
       <div className="flex-1"></div>
       <a
@@ -48,7 +53,7 @@ const Header = () => {
       </a>
       <div className="md:flex items-center gap-2 hidden">
         <BuyMeACoffeeButton />
-        {/* <ProductHuntBadge /> */}
+        <ProductHuntBadge />
       </div>
     </div>
   );
@@ -57,17 +62,6 @@ const Header = () => {
 export default Header;
 
 export const ProductHuntBadge = () => (
-  // <a
-  //   href="https://www.producthunt.com/posts/code-to-image-converter?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-code&#0045;to&#0045;image&#0045;converter"
-  //   target="_blank"
-  // >
-  //   <img
-  //     src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=346242&theme=dark"
-  //     alt="Code&#0032;to&#0032;Image&#0032;Converter - Convert&#0032;your&#0032;code&#0032;snippets&#0032;to&#0032;beautiful&#0032;images | Product Hunt"
-  //     className="h-12"
-  //   />
-  // </a>
-
   <a
     href="https://www.producthunt.com/posts/code-to-image-converter?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-code&#0045;to&#0045;image&#0045;converter"
     target="_blank"
