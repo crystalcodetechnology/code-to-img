@@ -28,11 +28,6 @@ const Header = () => {
             </a>
           </Link>
         </p>
-        <Link href="https://codetoimg.com/privacy-policy.html">
-          <a target="_blank" className="hover:text-gray-50">
-            Privacy
-          </a>
-        </Link>
       </div>
       <div className="flex-1"></div>
       <a
