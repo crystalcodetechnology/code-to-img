@@ -1,11 +1,17 @@
 import { Head, Html, Main, NextScript } from "next/document";
 import Script from "next/script";
-import { GA_TRACKING_ID } from "../src/lib/gtag";
 
 const MyDocument = () => {
   return (
     <Html>
-      <Head />
+      <Head>
+        <Script
+          strategy="beforeInteractive"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7322439099058988"
+          crossorigin="anonymous"
+        ></Script>
+      </Head>
       <body>
         <Main />
         <NextScript />
