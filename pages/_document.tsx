@@ -9,7 +9,7 @@ const MyDocument = () => {
           strategy="beforeInteractive"
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7322439099058988"
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
         ></Script>
       </Head>
       <body>
