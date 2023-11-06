@@ -2,12 +2,41 @@ import { useAtom } from "jotai";
 import Preview from "../src/components/Preview";
 import ToolBar from "../src/components/ToolBar";
 import { appStateAtom } from "../src/stores/appState";
+import Script from "next/script";
 
 function IndexPage() {
   return (
     <>
       <Backgorund />
+      <div className="flex flex-col py-16 items-center justify-center">
+        <ins
+          className="adsbygoogle"
+          style={{ display: "block" }}
+          data-ad-client="ca-pub-7322439099058988"
+          data-ad-slot="4221413788"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
+        <Script id="top-bar-add" strategy="afterInteractive">
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </Script>
+      </div>
+
       <Preview />
+
+      <div className="flex flex-col pt-16 pb-40 items-center justify-center">
+        <ins
+          className="adsbygoogle"
+          style={{ display: "block" }}
+          data-ad-client="ca-pub-7322439099058988"
+          data-ad-slot="3568455787"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
+        <Script id="top-bar-add" strategy="afterInteractive">
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </Script>
+      </div>
       <ToolBar />
     </>
   );
