@@ -18,7 +18,7 @@ function IndexPage() {
           data-full-width-responsive="true"
         ></ins>
         <Script id="top-bar-add" strategy="afterInteractive">
-          (adsbygoogle = window.adsbygoogle || []).push({});
+          {`(adsbygoogle = window.adsbygoogle || []).push({});`}
         </Script>
       </div>
 
@@ -33,8 +33,8 @@ function IndexPage() {
           data-ad-format="auto"
           data-full-width-responsive="true"
         ></ins>
-        <Script id="top-bar-add" strategy="afterInteractive">
-          (adsbygoogle = window.adsbygoogle || []).push({});
+        <Script id="bottom-bar-add" strategy="afterInteractive">
+          {`(adsbygoogle = window.adsbygoogle || []).push({});`}
         </Script>
       </div>
       <ToolBar />
